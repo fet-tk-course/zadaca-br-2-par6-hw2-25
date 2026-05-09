@@ -57,3 +57,14 @@ def update_supplier(
     session.commit()
     session.refresh(db_supplier)
     return db_supplier
+
+
+@router.delete("/{supplier_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_supplier(supplier_id: int, session: Session = Depends(get_session)):
+    supplier = session.get(Supplier, supplier_id)
+    if not supplier:
+        raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
+    
+    session.delete(supplier)
+    session.commit()
+    return None
