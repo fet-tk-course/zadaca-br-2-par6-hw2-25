@@ -28,3 +28,11 @@ def read_suppliers(
     
     results = session.exec(statement).all()
     return results
+
+
+@router.get("/{supplier_id}", response_model=Supplier)
+def read_supplier(supplier_id: int, session: Session = Depends(get_session)):
+    supplier = session.get(Supplier, supplier_id)
+    if not supplier:
+        raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
+    return supplier
