@@ -36,3 +36,24 @@ def read_supplier(supplier_id: int, session: Session = Depends(get_session)):
     if not supplier:
         raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
     return supplier
+
+
+@router.patch("/{supplier_id}", response_model=Supplier)
+def update_supplier(
+    supplier_id: int, 
+    supplier_data: SupplierUpdate, 
+    session: Session = Depends(get_session)
+):
+    db_supplier = session.get(Supplier, supplier_id)
+    if not db_supplier:
+        raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
+    
+    # Konverzija u rječnik uz ignorisanje polja koja nisu poslana
+    data = supplier_data.model_dump(exclude_unset=True)
+    for key, value in data.items():
+        setattr(db_supplier, key, value)
+    
+    session.add(db_supplier)
+    session.commit()
+    session.refresh(db_supplier)
+    return db_supplier
