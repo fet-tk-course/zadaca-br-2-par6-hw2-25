@@ -15,3 +15,16 @@ def create_supplier(supplier: SupplierCreate, session: Session = Depends(get_ses
     session.commit()
     session.refresh(db_supplier)
     return db_supplier
+
+
+@router.get("/", response_model=List[Supplier])
+def read_suppliers(
+    is_active: Optional[bool] = None, 
+    session: Session = Depends(get_session)
+):
+    statement = select(Supplier)
+    if is_active is not None:
+        statement = statement.where(Supplier.is_active == is_active)
+    
+    results = session.exec(statement).all()
+    return results
