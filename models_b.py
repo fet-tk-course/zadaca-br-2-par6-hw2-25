@@ -30,3 +30,15 @@ class SupplierCreate(SQLModel):
     supports_return: bool = False
     last_delivery_date: Optional[datetime] = None
     discount_rate: Optional[float] = None
+
+
+class SupplierUpdate(SQLModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone_number: Optional[str] = None
+    min_order_amount: Optional[int] = None
+    reliability_score: Optional[float] = None
+    is_active: Optional[bool] = None
+    supports_return: Optional[bool] = None
+    last_delivery_date: Optional[datetime] = None
+    discount_rate: Optional[float] = None
