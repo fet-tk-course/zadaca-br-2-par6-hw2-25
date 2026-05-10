@@ -8,6 +8,7 @@ class Product(SQLModel, table=True):
     quantity: int
     price: float
     available: bool
+    supplier_id: int
     
 class ProductCreate(SQLModel):
     name: str
@@ -15,6 +16,7 @@ class ProductCreate(SQLModel):
     quantity: int
     price: float
     available: bool
+    supplier_id: int
     
 class ProductUpdate(SQLModel):
     name: Optional[str] = None
@@ -22,4 +24,5 @@ class ProductUpdate(SQLModel):
     quantity: Optional[int] = None
     price: Optional[float] = None
     available: Optional[bool] = None
+    supplier_id: Optional[int] = None
 
