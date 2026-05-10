@@ -31,4 +31,56 @@ def get_product(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
     return product
 
+#POST /products
+# Kreiraj novog proizvod
+@router.post("/",status_code=status.HTTP_201_CREATED)
+def create_product(
+    product_data: ProductCreate,
+    session: Session = Depends(get_session)
+):
+    product=Product(**product_data.model_dump())
+    session.add(product)
+    session.commit()
+    session.refresh(product)
+    return product
+
+#PUT /products/{id}
+# Ažuriraj postojeći proizvod
+@router.put("/{product_id}")
+def update_product(
+    product_id: int,
+    product_data: ProductCreate,
+    session: Session = Depends(get_session)
+):
+    product = session.get(Product, product_id)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    
+    for key, value in product_data.model_dump(exclude_unset=True).items():
+        setattr(product, key, value)
+    
+    session.add(product)
+    session.commit()
+    session.refresh(product)
+    return product
+
+#PATCH /products/{id}
+# Ažuriraj postojeći proizvod (djelomično)
+@router.patch("/{product_id}")
+def patch_product(
+    product_id: int,
+    product_data: ProductUpdate,
+    session: Session = Depends(get_session)
+):
+    product = session.get(Product, product_id)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    
+    for key, value in product_data.model_dump(exclude_unset=True).items():
+        setattr(product, key, value)
+    
+    session.add(product)
+    session.commit()
+    session.refresh(product)
+    return product
 
