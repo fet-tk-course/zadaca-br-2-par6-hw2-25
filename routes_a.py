@@ -84,3 +84,17 @@ def patch_product(
     session.refresh(product)
     return product
 
+#DELETE /products/{id}
+# Obriši proizvod po ID-u
+@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(
+    product_id: int,
+    session: Session = Depends(get_session)
+):
+    product = session.get(Product, product_id)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    
+    session.delete(product)
+    session.commit()
+    return None
