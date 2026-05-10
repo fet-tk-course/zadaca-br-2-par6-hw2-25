@@ -3,11 +3,11 @@
 
 ## O projektu
 
-[Ovdje ukratko opišite domenu vaše aplikacije i njenu svrhu]
+Sistem za upravljanje skladištem je REST API aplikacija namijenjena za evidenciju i upravljanje proizvodima i dobavljačima u skladištu. Aplikacija omogućava kreiranje, pregled, ažuriranje i brisanje podataka o proizvodima i dobavljačima, kao i praćenje dostupnosti proizvoda, količine na stanju i povezanosti proizvoda sa odgovarajućim dobavljačima. Svrha aplikacije je olakšati organizaciju skladišnog poslovanja i upravljanje zalihama.
 
 ## Tim
 
-- **Student A**: [Ime Prezime] - resurs: `/resursi_a`
+- **Student A**: Šejla Valjevac - resurs: `/resursi_a`
 - **Student B**: [Ime Prezime] - resurs: `/resursi_b`
 
 ## Instalacija i pokretanje
@@ -52,12 +52,12 @@ uvicorn main:app --reload
 
 | Metoda | Ruta | Opis |
 |--------|------|------|
-| GET | `/resursi_a` | Lista svih resursa (sa query filterom) |
-| GET | `/resursi_a/{id}` | Dohvatanje resursa po ID-u |
-| POST | `/resursi_a` | Kreiranje novog resursa |
-| PUT | `/resursi_a/{id}` | Potpuna zamjena resursa |
-| PATCH | `/resursi_a/{id}` | Djelimično ažuriranje resursa |
-| DELETE | `/resursi_a/{id}` | Brisanje resursa |
+| GET | `/products` | Lista svih resursa (sa query filterom) |
+| GET | `/products/{products_id}` | Dohvatanje resursa po ID-u |
+| POST | `/products` | Kreiranje novog resursa |
+| PUT | `/products/{products_id}` | Potpuna zamjena resursa |
+| PATCH | `/products/{products_id}` | Djelimično ažuriranje resursa |
+| DELETE | `/products/{products_id}` | Brisanje resursa |
 
 **Primjer zahtjeva:**
 ```bash
@@ -77,9 +77,9 @@ curl -X POST "http://localhost:8000/resursi_a" \
 **Model:** [GPT-4, Copilot model, ...]
 
 **Primjer 1:**
-- **Prompt:** [Npr. "Kreiraj SQLModel klasu za entitet Knjiga sa poljima naslov, autor, godina, isbn"]
-- **Kako je pomoglo:** [Opis]
-- **Prilagodbe:** [Da li ste morali prilagoditi generisani kod]
+- **Prompt:** Kako dodati query filter po kategoriji u GET /products endpoint u FastAPI?
+- **Kako je pomoglo:** AI alat mi je pomogao pri implementaciji filtriranja proizvoda po kategoriji u GET /products endpointu i boljem razumijevanju rada query parametara u FastAPI-u.
+- **Prilagodbe:** Generisani kod nisam morala prilagoditi.
 
 **Primjer 2:**
 - **Prompt:** [Npr. "Implementiraj PATCH endpoint sa exclude_unset=True"]
