@@ -6,17 +6,6 @@ from models_b import Supplier, SupplierCreate, SupplierUpdate
 
 router = APIRouter(prefix="/suppliers", tags=["Suppliers"])
 
-
-@router.post("/", response_model=Supplier, status_code=status.HTTP_201_CREATED)
-def create_supplier(supplier: SupplierCreate, session: Session = Depends(get_session)):
-    # Kreiranje instance modela iz primljenih podataka
-    db_supplier = Supplier.model_validate(supplier)
-    session.add(db_supplier)
-    session.commit()
-    session.refresh(db_supplier)
-    return db_supplier
-
-
 @router.get("/", response_model=List[Supplier])
 def read_suppliers(
     is_active: Optional[bool] = None, 
@@ -30,12 +19,43 @@ def read_suppliers(
     return results
 
 
+@router.post("/", response_model=Supplier, status_code=status.HTTP_201_CREATED)
+def create_supplier(supplier: SupplierCreate, session: Session = Depends(get_session)):
+    # Kreiranje instance modela iz primljenih podataka
+    db_supplier = Supplier.model_validate(supplier)
+    session.add(db_supplier)
+    session.commit()
+    session.refresh(db_supplier)
+    return db_supplier
+
+
 @router.get("/{supplier_id}", response_model=Supplier)
 def read_supplier(supplier_id: int, session: Session = Depends(get_session)):
     supplier = session.get(Supplier, supplier_id)
     if not supplier:
         raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
     return supplier
+
+
+@router.put("/{supplier_id}", response_model=Supplier)
+def replace_supplier(
+    supplier_id: int, 
+    supplier_data: SupplierCreate, 
+    session: Session = Depends(get_session)
+):
+    db_supplier = session.get(Supplier, supplier_id)
+    if not db_supplier:
+        raise HTTPException(status_code=404, detail="Dobavljač nije pronađen")
+    
+    # Zamjena svih polja sa novim podacima
+    updated_supplier = Supplier.model_validate(supplier_data)
+    updated_supplier.id = supplier_id  # Očuvanje ID-a
+    
+    session.merge(updated_supplier)
+    session.commit()
+    session.refresh(updated_supplier)
+    return updated_supplier 
+
 
 
 @router.patch("/{supplier_id}", response_model=Supplier)

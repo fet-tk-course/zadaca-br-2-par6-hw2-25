@@ -8,7 +8,7 @@ Sistem za upravljanje skladištem je REST API aplikacija namijenjena za evidenci
 ## Tim
 
 - **Student A**: Šejla Valjevac - resurs: `/resursi_a`
-- **Student B**: [Ime Prezime] - resurs: `/resursi_b`
+- **Student B**: Edna Avdić - resurs: `/resursi_b`
 
 ## Instalacija i pokretanje
 
@@ -69,12 +69,20 @@ curl -X POST "http://localhost:8000/resursi_a" \
 
 ### Resurs B: `/resursi_b`
 
-[Analogno kao za Resurs A]
+| Metoda | Ruta | Opis |
+|--------|------|------|
+| GET | `/suppliers/` | Lista svih resursa |
+| POST | `/suppliers/` | Kreiranje novog resursa |
+| GET | `/suppliers/{supplier_id}` | Dohvatanje resursa po ID-u |
+| PUT | `/suppliers/{supplier_id}` | Potpuna zamjena resursa |
+| PATCH | `/suppliers/{supplier_id}` | Djelimično ažuriranje resursa |
+| DELETE | `/suppliers/{supplier_id}` | Brisanje resursa |
+
 
 ## Korištenje AI alata
 
-### Alat: [GitHub Copilot / ChatGPT / ...]
-**Model:** [GPT-4, Copilot model, ...]
+### Alat: [GitHub Copilot / ChatGPT / Google Gemini ...]
+**Model:** [GPT-4, Copilot model, Gemini 3 Flash ...]
 
 **Primjer 1:**
 - **Prompt:** Kako dodati query filter po kategoriji u GET /products endpoint u FastAPI?
@@ -82,9 +90,9 @@ curl -X POST "http://localhost:8000/resursi_a" \
 - **Prilagodbe:** Generisani kod nisam morala prilagoditi.
 
 **Primjer 2:**
-- **Prompt:** [Npr. "Implementiraj PATCH endpoint sa exclude_unset=True"]
-- **Kako je pomoglo:** [Opis]
-- **Prilagodbe:** [Opis]
+- **Prompt:** Možeš li mi predložiti atribute za model Supplier koji su tipa bool i Optional, kako bih poboljšala funkcionalnost baze?
+- **Kako je pomoglo:** Dobila sam više konkretnih primjera koji proširuju osnovni model uz objašnjenje kako svaki od njih utiče na funkcionalnost API-ja i validaciju podataka.
+- **Prilagodbe:** Odabrala sam atribute is_active i supports_return (bool) te za opciona polja sam dodala last_delivery_date (datetime) i discount_rate (float) jer su najrelevantniji za entitet dobavljača te sam ih integrisala u SupplierCreate i SupplierUpdate klase kako bi bili dostupni i pri kreiranju i pri ažuriranju.
 
 ## Napomene
 
