@@ -1,13 +1,14 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/wxDq4rbD)
 # Zadaća 2 - REST API aplikacija
 
 ## O projektu
 
-[Ovdje ukratko opišite domenu vaše aplikacije i njenu svrhu]
+Sistem za upravljanje skladištem je REST API aplikacija namijenjena za evidenciju i upravljanje proizvodima i dobavljačima u skladištu. Aplikacija omogućava kreiranje, pregled, ažuriranje i brisanje podataka o proizvodima i dobavljačima, kao i praćenje dostupnosti proizvoda, količine na stanju i povezanosti proizvoda sa odgovarajućim dobavljačima. Svrha aplikacije je olakšati organizaciju skladišnog poslovanja i upravljanje zalihama.
 
 ## Tim
 
-- **Student A**: [Ime Prezime] - resurs: `/resursi_a`
-- **Student B**: [Ime Prezime] - resurs: `/resursi_b`
+- **Student A**: Šejla Valjevac - resurs: `/resursi_a`
+- **Student B**: Edna Avdić - resurs: `/resursi_b`
 
 ## Instalacija i pokretanje
 
@@ -51,12 +52,12 @@ uvicorn main:app --reload
 
 | Metoda | Ruta | Opis |
 |--------|------|------|
-| GET | `/resursi_a` | Lista svih resursa (sa query filterom) |
-| GET | `/resursi_a/{id}` | Dohvatanje resursa po ID-u |
-| POST | `/resursi_a` | Kreiranje novog resursa |
-| PUT | `/resursi_a/{id}` | Potpuna zamjena resursa |
-| PATCH | `/resursi_a/{id}` | Djelimično ažuriranje resursa |
-| DELETE | `/resursi_a/{id}` | Brisanje resursa |
+| GET | `/products` | Lista svih resursa (sa query filterom) |
+| GET | `/products/{products_id}` | Dohvatanje resursa po ID-u |
+| POST | `/products` | Kreiranje novog resursa |
+| PUT | `/products/{products_id}` | Potpuna zamjena resursa |
+| PATCH | `/products/{products_id}` | Djelimično ažuriranje resursa |
+| DELETE | `/products/{products_id}` | Brisanje resursa |
 
 **Primjer zahtjeva:**
 ```bash
@@ -68,22 +69,30 @@ curl -X POST "http://localhost:8000/resursi_a" \
 
 ### Resurs B: `/resursi_b`
 
-[Analogno kao za Resurs A]
+| Metoda | Ruta | Opis |
+|--------|------|------|
+| GET | `/suppliers/` | Lista svih resursa |
+| POST | `/suppliers/` | Kreiranje novog resursa |
+| GET | `/suppliers/{supplier_id}` | Dohvatanje resursa po ID-u |
+| PUT | `/suppliers/{supplier_id}` | Potpuna zamjena resursa |
+| PATCH | `/suppliers/{supplier_id}` | Djelimično ažuriranje resursa |
+| DELETE | `/suppliers/{supplier_id}` | Brisanje resursa |
+
 
 ## Korištenje AI alata
 
-### Alat: [GitHub Copilot / ChatGPT / ...]
-**Model:** [GPT-4, Copilot model, ...]
+### Alat: [GitHub Copilot / ChatGPT / Google Gemini ...]
+**Model:** [GPT-4, Copilot model, Gemini 3 Flash ...]
 
 **Primjer 1:**
-- **Prompt:** [Npr. "Kreiraj SQLModel klasu za entitet Knjiga sa poljima naslov, autor, godina, isbn"]
-- **Kako je pomoglo:** [Opis]
-- **Prilagodbe:** [Da li ste morali prilagoditi generisani kod]
+- **Prompt:** Kako dodati query filter po kategoriji u GET /products endpoint u FastAPI?
+- **Kako je pomoglo:** AI alat mi je pomogao pri implementaciji filtriranja proizvoda po kategoriji u GET /products endpointu i boljem razumijevanju rada query parametara u FastAPI-u.
+- **Prilagodbe:** Generisani kod nisam morala prilagoditi.
 
 **Primjer 2:**
-- **Prompt:** [Npr. "Implementiraj PATCH endpoint sa exclude_unset=True"]
-- **Kako je pomoglo:** [Opis]
-- **Prilagodbe:** [Opis]
+- **Prompt:** Možeš li mi predložiti atribute za model Supplier koji su tipa bool i Optional, kako bih poboljšala funkcionalnost baze?
+- **Kako je pomoglo:** Dobila sam više konkretnih primjera koji proširuju osnovni model uz objašnjenje kako svaki od njih utiče na funkcionalnost API-ja i validaciju podataka.
+- **Prilagodbe:** Odabrala sam atribute is_active i supports_return (bool) te za opciona polja sam dodala last_delivery_date (datetime) i discount_rate (float) jer su najrelevantniji za entitet dobavljača te sam ih integrisala u SupplierCreate i SupplierUpdate klase kako bi bili dostupni i pri kreiranju i pri ažuriranju.
 
 ## Napomene
 
