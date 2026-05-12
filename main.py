@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 from database import create_db_and_tables
 from routes_a import router as products_router
 
+from routes_b import router as router_b
+import models_b
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,6 +20,9 @@ app = FastAPI(
 )
 
 app.include_router(products_router)
+
+# Registracija routera za resurs "Suppliers"
+app.include_router(router_b)
 
 @app.get("/")
 def read_root():
