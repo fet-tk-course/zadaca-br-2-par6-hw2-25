@@ -32,6 +32,14 @@ def create_supplier(supplier: SupplierCreate, session: Session = Depends(get_ses
         raise HTTPException(status_code=409, detail="Dobavljač s ovim brojem telefona već postoji")
 
 
+# Dodati custom GET endpoint koji vraća samo aktivne dobavljače
+@router.get("/active", response_model=List[Supplier])
+def read_active_suppliers(session: Session = Depends(get_session)):
+    statement = select(Supplier).where(Supplier.is_active == True)
+    results = session.exec(statement).all()
+    return results
+
+
 
 @router.get("/{supplier_id}", response_model=Supplier)
 def read_supplier(supplier_id: int, session: Session = Depends(get_session)):
