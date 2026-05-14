@@ -96,4 +96,17 @@ curl -X POST "http://localhost:8000/resursi_a" \
 
 ## Napomene
 
-[Dodatne napomene specifične za vašu implementaciju]
+## Student B - odbrana zadaće
+
+Za zadatak br.1 dodala sam validatore za sve atribute mog modela: 
+name - vraća poruku: Naziv dobavljača ne može biti prazan, 
+email - vraća poruku: Neispravan email format, 
+phone_number - vraća poruku: Broj telefona ne može biti prazan, 
+min_order_amount - vraća poruku: Minimalni iznos narudžbe ne može biti negativan, 
+reliability_score - vraća poruku: Ocjena pouzdanosti mora biti između 0 i 5,  
+is_active - vraća poruku: is_active mora biti boolean vrijednost, 
+supports_return - vraća poruku: supports_return mora biti boolean vrijednost, 
+last_delivery_date - vraća poruku: Datum zadnje isporuke ne može biti u budućnosti,
+discount_rate - vraća poruku: Stopa popusta mora biti između 0 i 100.
+Za zadatak br.2 dodala sam u svoj POST endpoint provjeru da li postoji više dobavljača koji imaju isti broj telefona te ukoliko postoje da vraća HTTP 409 Conflict sa porukom koja glasi: "Dobavljač s ovim brojem telefona već postoji".
+Za zadatak br.3 sam dodala custom GET endpoint koji vraća samo aktivne dobavljače.
