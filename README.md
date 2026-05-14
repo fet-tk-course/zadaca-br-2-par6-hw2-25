@@ -89,3 +89,11 @@ curl -X POST "http://localhost:8000/resursi_a" \
 ## Napomene
 
 [Dodatne napomene specifične za vašu implementaciju]
+
+## Provjera zadace
+-U ProductCreate dodani su Pydantic validatori za provjeru ispravnosti prilikom kreiranja proizvoda. Provjere su: naziv proizvoda ne smije biti prazan string i kolicina proizvoda mora biti veca od nule.
+U POST endpoint dodana je provjera duplikata koja sprecava kreiranje proizvoda sa istim nazivom. Ukoliko postoji proizvod sa istim nazivom vraca se HTTP 409 Conflict status.
+GET /count endpoint vraca ukupan broj proizvoda u bazi podataka. 
+-Zahtjev GET /products/count i vraca ukupan broj proizvoda. Zahtjev POST /products, ukoliko je naziv generise se greska. Zahtjev POST /products, ukoliko je kolicina manja od 0 generise se greska. Zahtjev POST /products, ukoliko postoji proizvod sa tim imenom generise se greska.
+-U Products supplier_id predstavlja strani kljuc izmedju products i suppliers.
+-Validacijska pravila: naziv proizvoda ne smije biti prazan, kolicina proizvoda ne smije biti manja od 0. Moguce greske su naziv proizvoda ne smije biti prazan i kolicina proizvoda mora biti veca od 0.

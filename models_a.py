@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field
 from typing import Optional
+from pydantic import field_validator
 
 #Model proizvoda koji predstavlja tabelu u bazi podataka
 class Product(SQLModel, table=True):
@@ -19,6 +20,18 @@ class ProductCreate(SQLModel):
     price: float
     available: bool
     supplier_id: int
+    @field_validator("name")
+    @classmethod
+    def naziv_ne_smije_biti_prazan(cls,v):
+        if not v.strip():
+            raise ValueError("Naziv proizvoda ne smije biti prazan")
+        return v.strip() 
+    @field_validator("quantity")
+    @classmethod 
+    def kolicina_mora_biti_pozitivna(cls,v):
+        if v<=0:
+            raise ValueError("Kolicina mora biti veca od nule")
+        return v
     
 #Model za ažuriranje proizvoda
 class ProductUpdate(SQLModel):

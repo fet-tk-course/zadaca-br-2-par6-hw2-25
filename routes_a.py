@@ -19,6 +19,16 @@ def get_products(
     products = session.exec(statement).all()
     return products
 
+# GET /products/count
+# Vraca ukupan broj podataka
+@router.get("/count")
+def count_products(
+    session: Session=Depends(get_session)
+):
+    products=session.exec(select(Product)).all()
+    return {
+        "ukupno proizvoda":len(products)
+    }
 # GET /products/{id}
 # Dohvati proizvod po ID-u
 @router.get("/{product_id}")
@@ -38,6 +48,9 @@ def create_product(
     product_data: ProductCreate,
     session: Session = Depends(get_session)
 ):
+    existing_field=session.exec(select(Product).where(Product.name==product_data.name)).first()
+    if existing_field:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Product with this id already exists")
     product=Product(**product_data.model_dump())
     session.add(product)
     session.commit()
