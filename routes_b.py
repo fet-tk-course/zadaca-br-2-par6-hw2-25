@@ -27,6 +27,10 @@ def create_supplier(supplier: SupplierCreate, session: Session = Depends(get_ses
     session.commit()
     session.refresh(db_supplier)
     return db_supplier
+    # Provjera koja vraća HTTP 409 Conflict ako resurs s istim jedinstvenim poljem već postoji
+    if session.exec(select(Supplier).where(Supplier.phone_number == supplier.phone_number)).first():
+        raise HTTPException(status_code=409, detail="Dobavljač s ovim brojem telefona već postoji")
+
 
 
 @router.get("/{supplier_id}", response_model=Supplier)
